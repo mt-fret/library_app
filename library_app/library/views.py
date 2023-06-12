@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from django.views.generic import View
 
-# Create your views here.
+
+class AddBookView(View):
+    def get(self, request):
+        pass
+
+
+class ShelvesView(View):
+    def get(self, request):
+        ...
