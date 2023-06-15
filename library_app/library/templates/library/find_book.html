@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Find Book{% endblock %}
+
+{% block content %}
+<div class="p-5 lg:p-10 text-center">
+    <h1 class="text-2xl lg:text-4xl">Find Book</h1>
+</div>
+
+    <div>
+    <form method="post">
+        {% csrf_token %}
+        <label>Insert ISBN
+        <input name='isbn' type="text">
+        </label>
+        <button type="submit">Find!</button>
+
+    </form>
+    </div>
+
+    <div>
+        {% for book in books %}
+        <div>
+        {{ book.items }}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
