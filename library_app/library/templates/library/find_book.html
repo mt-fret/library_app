@@ -7,22 +7,28 @@
     <h1 class="text-2xl lg:text-4xl">Find Book</h1>
 </div>
 
-    <div>
+    <div class="text-center">
     <form method="post">
         {% csrf_token %}
         <label>Insert ISBN
         <input name='isbn' type="text">
         </label>
-        <button type="submit">Find!</button>
-
+        <button name='isbn_search' class="bg-white" type="submit">Find!</button>
+<br>
+        <label>Insert Title
+            <input class='mt-6' name="title" type="text">
+        </label>
+        <button name="title_search" class="bg-white" type="submit">Find!</button>
     </form>
     </div>
 
     <div>
         {% for book in books %}
-        <div>
-        {{ book.items }}
-        </div>
+        {% for key, value in book.items %}
+
+        {{ key }}: {{ value }}
+
+        {% endfor %}
         {% endfor %}
     </div>
 {% endblock %}
