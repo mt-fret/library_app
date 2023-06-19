@@ -22,13 +22,22 @@
     </form>
     </div>
 
-    <div>
+    <div class="grid grid-cols-5 gap-4">
+
         {% for book in books %}
-        {% for key, value in book.items %}
-
-        {{ key }}: {{ value }}
-
+            <div>
+                <form method="post">
+                {% csrf_token %}
+                    <p name="book_title">{{ book.title }}</p>
+                    <p >{{ book.subtitle }}</p>
+                {% if book.image %}
+                    <img src="{{ book.image }}">
+                {% endif %}
+                <p>{{ book.authors }}</p>
+                <p>{{ book.published_date }}</p>
+                </form>
+            </div>
         {% endfor %}
-        {% endfor %}
+
     </div>
 {% endblock %}
