@@ -22,19 +22,28 @@
     </form>
     </div>
 
-    <div class="grid grid-cols-5 gap-4">
+    <div class="ml-3 mr-3 grid grid-cols-5 gap-4">
 
         {% for book in books %}
-            <div>
-                <form method="post">
+            <div class="px-5 py-5 bg-white rounded-xl">
+                <form method="post" action="{% url 'add_book' %}">
                 {% csrf_token %}
-                    <p name="book_title">{{ book.title }}</p>
-                    <p >{{ book.subtitle }}</p>
+                    <input disabled type="text" class="input_disabled" name="book_title" value="{{ book.title }}">
+                    <input disabled type="text" class="input_disabled" name="book_subtitle" value="{{ book.subtitle }}">
+                <button type="submit">
                 {% if book.image %}
-                    <img src="{{ book.image }}">
+                    <input type="hidden" class="input_disabled" name="book_image" value="{{ book.image }}">
+                    <img src="{{ book.image }}" alt="book image">
+                    {% else %}
+                    <img src=""
                 {% endif %}
-                <p>{{ book.authors }}</p>
-                <p>{{ book.published_date }}</p>
+                </button>
+                {% for author in book.authors %}
+                    <input disabled type="text" class="input_disabled" name="book_authors" value="{{ author }}">
+                {% endfor %}
+                {% if book.published_date %}
+                <input disabled type="text" class="input_disabled" name="book_date" value="{{ book.published_date }}">
+                {% endif %}
                 </form>
             </div>
         {% endfor %}

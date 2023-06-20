@@ -6,7 +6,7 @@
 
     <title>{% block title %}{% endblock %} | Recipe Bot</title>
     {% load static %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://cdn.tailwindcss.com"></script>
 {% block style %}
 {% endblock %}
@@ -27,7 +27,7 @@
 
     <div class="flex items-center space-x-4">
         {% if request.user.is_authenticated %}
-            <a href="{% url 'add_book' %}" class="text-white hover:text-gray-200">Add Book</a>
+            <a href="{% url 'find_book' %}" class="text-white hover:text-gray-200">Find Book</a>
             <p> | </p>
             <a href="{% url 'shelves' %}" class="text-white hover:text-gray-200">Your Shelves</a>
             <p> | </p>
