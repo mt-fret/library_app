@@ -21,32 +21,42 @@
         <button name="title_search" class="bg-white" type="submit">Find!</button>
     </form>
     </div>
-
-    <div class="ml-3 mr-3 grid grid-cols-5 gap-4">
+    {% if books %}
+    <div class="mt-6 ml-3 mr-3 grid grid-cols-5 gap-4">
 
         {% for book in books %}
             <div class="px-5 py-5 bg-white rounded-xl">
                 <form method="post" action="{% url 'add_book' %}">
                 {% csrf_token %}
+                <button type="submit">
                     <input disabled type="text" class="input_disabled" name="book_title" value="{{ book.title }}">
                     <input disabled type="text" class="input_disabled" name="book_subtitle" value="{{ book.subtitle }}">
-                <button type="submit">
+
                 {% if book.image %}
                     <input type="hidden" class="input_disabled" name="book_image" value="{{ book.image }}">
                     <img src="{{ book.image }}" alt="book image">
                     {% else %}
                     <img src=""
                 {% endif %}
-                </button>
+
                 {% for author in book.authors %}
                     <input disabled type="text" class="input_disabled" name="book_authors" value="{{ author }}">
                 {% endfor %}
                 {% if book.published_date %}
                 <input disabled type="text" class="input_disabled" name="book_date" value="{{ book.published_date }}">
                 {% endif %}
+                </button>
                 </form>
             </div>
         {% endfor %}
+        </div>
 
-    </div>
+    {% elif no_books %}
+        <div class="flex justify-center mt-6">
+         <div class="text-center px-5 py-5 bg-red-600 rounded-xl">
+         {{ no_books }}
+         </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

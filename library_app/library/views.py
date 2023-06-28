@@ -16,36 +16,46 @@ class FindBookView(View):
             isbn = request.POST.get('isbn')
             books = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key={google_books_api}')
 
-            books = books.json()
+            if books.json()['totalItems'] > 0:
+                books = books.json()
 
-            books_to_display = []
+                books_to_display = []
 
-            for book in books['items']:
-                book = book['volumeInfo']
-                book_title = book.get('title', '')
-                book_subtitle = book.get('subtitle', '')
-                book_authors = book.get('authors', '')
-                book_published_date = book.get('publishedDate', '')
-                book_language = book.get('language', '')
+                for book in books['items']:
+                    book = book['volumeInfo']
+                    book_title = book.get('title', '')
+                    book_subtitle = book.get('subtitle', '')
+                    book_authors = book.get('authors', '')
+                    book_published_date = book.get('publishedDate', '')
+                    book_language = book.get('language', '')
 
-                book_image = book.get('imageLinks', '')
-                if book_image:
-                    book_image = book_image.get('thumbnail')
+                    book_image = book.get('imageLinks', '')
+                    if book_image:
+                        book_image = book_image.get('thumbnail')
 
-                books_to_display.append({'title': book_title,
-                                         'subtitle': book_subtitle,
-                                         'authors': book_authors,
-                                         'published_date': book_published_date,
-                                         'language': book_language,
-                                         'image': book_image
-                                         })
-            ctx = {
-                'books': books_to_display
-            }
+                    books_to_display.append({'title': book_title,
+                                             'subtitle': book_subtitle,
+                                             'authors': book_authors,
+                                             'published_date': book_published_date,
+                                             'language': book_language,
+                                             'image': book_image
+                                             })
+                ctx = {
+                    'books': books_to_display
+                }
+            else:
+                ctx = {
+                    'no_books': 'No books found!'
+                }
 
         return render(request, 'library/find_book.html', ctx)
 
 
 class ShelvesView(View):
+    def get(self, request):
+        ...
+
+
+class AddBookView(View):
     def get(self, request):
         ...
